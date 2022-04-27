@@ -1,0 +1,78 @@
+.overlay {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(27, 20, 20);
+}
+.container {
+  position: fixed;
+  width: 60%;
+  margin: 0;
+}
+.aaa {
+  display: flex;
+}
+.BackButton {
+  position: fixed;
+  top: 60px;
+  left: 10px;
+  width: 50px;
+  border-radius: 50px;
+}
+.container img {
+  width: 300px;
+  margin-right: 10px;
+}
+.container p {
+  color: white;
+}
+.title {
+  margin-top: 0;
+  padding-top: 10px;
+  font-size: 25px;
+  font-weight: 700;
+}
+ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+.genre,
+.company {
+  color: white;
+  margin-right: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 0 7px 1px 7px;
+}
+.detailsContaner {
+  width: 60%;
+}
+.detailsContaner p,
+.castList,
+.sectionContainer {
+  display: flex;
+  border-bottom: 1px solid rgb(90, 80, 80);
+  padding-bottom: 5px;
+}
+.castList {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+}
+.castListItem {
+  margin-right: 20px;
+  color: rgb(153, 55, 245);
+}
+.section {
+  color: white;
+  width: 70px;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+.budget {
+  margin: 0;
+  color: white;
+}

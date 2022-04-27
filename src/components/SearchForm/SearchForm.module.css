@@ -1,0 +1,22 @@
+.form {
+  align-self: center;
+  margin-left: 40px;
+}
+.form input {
+  height: 25px;
+  width: 200px;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  padding: 0;
+}
+.form button {
+  height: 25px;
+  width: 70px;
+  border-radius: 3px;
+  border: none;
+  margin-left: 5px;
+  font-size: 15px;
+  color: rgb(49, 6, 167);
+  cursor: pointer;
+}

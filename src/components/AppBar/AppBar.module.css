@@ -1,0 +1,47 @@
+.appBar {
+ position: sticky;
+ top: 0;
+ left: 0;
+  display: flex;
+  position: sticky;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(20, 11, 11);
+  margin: 0;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.logo  {
+  align-self: center;
+  margin: 30px;
+  color: white;
+  text-transform: uppercase;
+  font-size: 25px;
+  font-weight: 600;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-shadow: -4px 3px blue;
+}
+.nav {
+  display: flex;
+  align-self: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.navItem {
+  font-size: 20px;
+}
+.navItem:nth-child(2) {
+  margin-left: 20px;
+}
+
+.active {
+  color: white;
+}
+.inactive {
+  color: rgb(76, 17, 184);
+}
