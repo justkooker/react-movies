@@ -1,52 +1,62 @@
-import React, { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
+import {
+  fetchingScrollOn,
+  fetchFilmsWithInfiniteScroll,
+} from 'redux/features/filmsSlice';
+import ArrowButton from 'components/ArrowButton';
+import routes from 'routes/routes';
 import styles from './FilmList.module.css';
-function FilmList({
-  films,
-  storageFilm,
-  trendFilms,
-  loadMore,
-  toggleFetchingScroll,
-  fetchingScroll = false,
-}) {
+function FilmList({ filmList }) {
+  const [activeBtnToTop, setActiveBtnToTop] = useState(false);
   const posterURL = 'https://image.tmdb.org/t/p/w500/';
-
-  let data;
-  if (trendFilms) {
-    data = trendFilms;
-  } else if (films === null) {
-    data = storageFilm;
-  } else {
-    data = films;
-  }
-  const link = film => {
-    return data === trendFilms ? (
-      <div className={styles.linkContainer}>
-        <img src={`${posterURL}${film.poster_path}`} className={styles.image} />
-        <NavLink to={`film/${film.id}`}>{film.title}</NavLink>
-      </div>
-    ) : (
-      <div className={styles.linkContainer}>
-        <img src={`${posterURL}${film.poster_path}`} className={styles.image} />
-        <NavLink to={`${film.id}`}>{film.title}</NavLink>
-      </div>
-    );
+  const films = useSelector(({ filmsState }) => filmsState.films);
+  const fetchingScroll = useSelector(
+    ({ filmsState }) => filmsState.fetchingScroll
+  );
+  const searchQuery = useSelector(({ filmsState }) => filmsState.searchQuery);
+  const page = useSelector(({ filmsState }) => filmsState.page);
+  const totalCountFilm = useSelector(
+    ({ filmsState }) => filmsState.totalCountFilm
+  );
+  const infiniteScrollParams = {
+    searchQuery,
+    page,
+    totalCountFilm,
+    films,
   };
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const scrollHandler = e => {
     if (
       e.target.documentElement.scrollHeight -
         (e.target.documentElement.scrollTop + window.innerHeight) <
-      50 
+      50
     ) {
-      toggleFetchingScroll();
+      dispatch(fetchingScrollOn());
     }
+    if (e.target.documentElement.scrollTop > 500) {
+      setActiveBtnToTop(true);
+    }
+
+    if (e.target.documentElement.scrollTop < 500) {
+      setActiveBtnToTop(false);
+    }
+  };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
   useEffect(() => {
     if (fetchingScroll && films !== []) {
-      loadMore();
+      dispatch(fetchFilmsWithInfiniteScroll(infiniteScrollParams));
     }
   }, [fetchingScroll]);
+
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
     return function () {
@@ -54,13 +64,35 @@ function FilmList({
     };
   }, []);
   return (
-    data && (
+    <>
       <ul className={styles.filmList}>
-        {data.map(film => {
-          return <li key={film.id}>{link(film)}</li>;
+        {filmList.map(film => {
+          return (
+            <li key={film.id}>
+              <div className={styles.linkContainer}>
+                <NavLink
+                  className={styles.linkContainer}
+                  to={`${routes.film}/${film.id}`}
+                  state={{ from: { pathname: pathname } }}
+                >
+                  <img
+                    src={`${posterURL}${film.poster_path}`}
+                    className={styles.image}
+                    alt={film.title}
+                  />
+                  {film.title}
+                </NavLink>
+              </div>
+            </li>
+          );
         })}
       </ul>
-    )
+      {activeBtnToTop && (
+        <div className={styles.toTopBtn}>
+          <ArrowButton func={scrollToTop} />
+        </div>
+      )}
+    </>
   );
 }
 export default FilmList;

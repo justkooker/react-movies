@@ -1,31 +1,104 @@
 .filmList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
   list-style: none;
   margin: 0;
   padding: 10px 0 0 0;
   min-height: 100vh;
 }
 .image {
-
-  height: 210px;
-  object-fit: fill;
+  height: auto;
+  width: 100%;
+  object-fit: contain;
+  margin-bottom: 5px;
 }
 .filmList li {
-   display: flex;
-  width: 20%;
-  margin:  10px 0;
-  justify-content: center;
+  display: flex;
+  width: 250px;
+  margin: 0 auto;
 }
 .filmList a {
   color: rgb(100, 25, 197);
+  font-size: 18px;
 }
 .linkContainer {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  margin-bottom: 10px;
 }
 .title {
   width: 100%;
+}
+.toTopBtn {
+  position: fixed;
+  width: 45px;
+  height: 45px;
+  bottom: 30px;
+  right: 25px;
+  transform: rotate(-90deg);
+  background-color: black;
+  border-radius: 50px;
+  border: none;
+  opacity: 0.5;
+}
+@media screen and (min-width: 481px) {
+  .filmList {
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .filmList li {
+    width: 230px;
+  }
+}
+@media screen and (min-width: 769px) {
+  .filmList {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+  }
+  .filmList li {
+    width: 250px;
+  }
+  .filmList a {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1025px) {
+  .filmList {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .filmList li {
+    width: 250px;
+    gap: 10px;
+  }
+  .filmList a {
+    font-size: 20px;
+  }
+  .toTopBtn {
+    right: 50px;
+    bottom: 50px;
+  }
+}
+@media screen and (min-width: 1201px) {
+  .filmList {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .filmList li {
+    width: 230px;
+    gap: 10px;
+  }
+  .filmList a {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 1601px) {
+  .filmList {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .filmList li {
+    width: 260px;
+    gap: 10px;
+  }
+  .filmList a {
+    font-size: 22px;
+  }
 }

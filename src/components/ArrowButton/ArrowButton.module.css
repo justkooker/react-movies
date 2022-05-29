@@ -1,0 +1,12 @@
+.button {
+  background-image: url('../../images/arrow-button.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: inherit;
+  border-radius: 50px; 
+}

@@ -1,100 +1,53 @@
-import React, { Component } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import routes from './views/routes';
-import services from './services/api-services';
+import { useDispatch } from 'react-redux';
+import { setMobileView, setDesktopView } from 'redux/features/filmsSlice';
+import routes from './routes/routes';
+import AppBar from 'components/AppBar';
+const HomeView = lazy(() =>
+  import('./views/HomeView/' /* webpackChunkName: "home-view" */)
+);
+const FilmDetailsView = lazy(() =>
+  import('./views/FilmDetailsView' /* webpackChunkName: "FilmDetails-view" */)
+);
+const VideoView = lazy(() =>
+  import('./views/VideoView' /* webpackChunkName: "video-view" */)
+);
 
-import HomeView from 'views/HomeView';
-import VideoView from 'views/VideoView';
-import FilmDeltailsView from './views/FilmDetailsView/FilmDeltailView';
-import Cast from 'components/Cast';
-import Review from 'components/Review';
-import AppBar from './components/AppBar';
-
-export default class App extends Component {
-  state = {
-    searchQuery: '',
-    films: [],
-    storageFIlm: null,
-    page: 1,
-    totalCountFilm: 0,
-    fetchingScroll: true,
+function App() {
+  const dispatch = useDispatch();
+  const onResize = () => {
+    window.onresize = () => {
+      if (window.innerWidth < 481) {
+        dispatch(setMobileView(true));
+      }
+      if (window.innerWidth > 480) {
+        dispatch(setMobileView(false));
+      }
+      if (window.innerWidth > 1200) {
+        dispatch(setDesktopView(true));
+      }
+      if (window.innerWidth < 1201) {
+        dispatch(setDesktopView(false));
+      }
+    };
   };
-  componentDidMount() {
-    const films = JSON.parse(localStorage.getItem('films'));
-    this.setState({ storageFIlm: films });
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
-      this.addFilmsWithFormSubmit();
-    }
-  }
-  handleChangeQuery = query => {
-    this.setState({ searchQuery: query, page: 1, films: [] });
-  };
-  toggleFetchingScroll = () => {
-    this.setState({ fetchingScroll: true });
-  };
-  addFilmsWithFormSubmit = () => {
-    const { searchQuery } = this.state;
-    if (searchQuery) {
-      services
-        .fetchSearchMovies(searchQuery)
-        .then(({ results, total_results }) => {
-          this.setState({
-            films: [...results],
-            page: this.state.page + 1,
-            totalCountFilm: total_results,
-          });
-          localStorage.setItem('films', JSON.stringify([...results]));
-        })
-        .finally(() => this.setState({ fetchingScroll: false }));
-    }
-  };
-
-  addFilmsWithInfiniteScroll = () => {
-    const { searchQuery, page, films, totalCountFilm } = this.state;
-    if (searchQuery && films.length < totalCountFilm) {
-      services
-        .fetchSearchMovies(searchQuery, page)
-        .then(({ results }) => {
-          this.setState(prevState => ({
-            films: [...prevState.films, ...results],
-            page: prevState.page + 1,
-          }));
-          localStorage.setItem('films', JSON.stringify([...results]));
-        })
-        .finally(() => this.setState({ fetchingScroll: false }));
-    }
-  };
-  render() {
-    return (
-      <>
-        <AppBar
-          onFormSubmit={this.addFilmsWithFormSubmit}
-          handleChangeQuery={this.handleChangeQuery}
-        />
-        <div className="container">
+  useEffect(() => {
+    onResize();
+  }, []);
+  return (
+    <>
+      <AppBar />
+      <div className="container">
+        <Suspense fallback={<p>loading...</p>}>
           <Routes>
             <Route path={routes.home} element={<HomeView />} />
-            <Route
-              path={routes.film}
-              element={
-                <VideoView
-                  films={this.state.films}
-                  storageFilm={this.state.storageFIlm}
-                  loadMore={this.addFilmsWithInfiniteScroll}
-                  toggleFetchingScroll={this.toggleFetchingScroll}
-                  fetchingScroll={this.state.fetchingScroll}
-                />
-              }
-            />
-            <Route path={routes.filmDetails} element={<FilmDeltailsView />}>
-              <Route path={routes.filmCast} element={<Cast />} />
-              <Route path={routes.filmReviews} element={<Review />} />
-            </Route>
+            <Route path={routes.film} element={<VideoView />} />
+            <Route path={routes.filmDetails} element={<FilmDetailsView />} />
           </Routes>
-        </div>
-      </>
-    );
-  }
+        </Suspense>
+      </div>
+    </>
+  );
 }
+export default App;

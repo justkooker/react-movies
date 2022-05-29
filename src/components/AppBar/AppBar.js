@@ -1,23 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import routes from '../../views/routes';
-
+import routes from '../../routes/routes';
 import SearchForm from 'components/SearchForm';
 
 import styles from './AppBar.module.css';
+import { useSelector } from 'react-redux';
 const setActive = ({ isActive }) =>
   isActive ? `${styles.active}` : `${styles.inactive}`;
-export default function AppBar({
-  onFormSubmit,
-  handleChangeQuery,
-  searchQuery,
-}) {
+export default function AppBar() {
+  const mobileView = useSelector(state => state.filmsState.mobileView);
   return (
     <>
       <div className={styles.appBar}>
-        <NavLink to="/" className={styles.logo}>
-          <span>film db</span>
-        </NavLink>
+        {!mobileView && (
+          <NavLink to="/" className={styles.logo}>
+            film db
+          </NavLink>
+        )}
         <div className={styles.container}>
           <ul className={styles.nav}>
             <li className={styles.navItem}>
@@ -31,12 +30,7 @@ export default function AppBar({
               </NavLink>
             </li>
           </ul>
-          <SearchForm
-            onFormSubmit={onFormSubmit}
-            handleChangeQuery={handleChangeQuery}
-          
-            
-          />
+          <SearchForm />
         </div>
       </div>
     </>

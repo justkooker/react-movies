@@ -1,42 +1,67 @@
 .overlay {
-  position: fixed;
-  top: 50px;
-  left: 0;
   width: 100%;
-  height: 100vh;
   background-color: rgb(27, 20, 20);
 }
 .container {
-  position: fixed;
-  width: 60%;
-  margin: 0;
+  width: 95%;
+  max-width: 480px;
+  height: 100%;
+
+  margin: 0 auto;
 }
-.aaa {
+.showTreilerBtn {
+  height: 30px;
+  width: 150px;
+  bottom: 50px;
+  margin: 5px 0;
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  outline: transparent;
+  font-size: 16px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.visualContainer {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.iframe {
+  width: 100%;
+  height: 300px;
 }
 .BackButton {
-  position: fixed;
-  top: 60px;
-  left: 10px;
+  position: static;
+  top: 70px;
+  left: 20px;
   width: 50px;
+  height: 50px;
+  transform: rotate(180deg);
   border-radius: 50px;
+  margin-right: 15px;
+  margin-top: 5px;
 }
-.container img {
-  width: 300px;
-  margin-right: 10px;
+.poster {
+  max-width: 480px;
+  margin: 0;
+  width: 100%;
 }
 .container p {
   color: white;
 }
 .title {
+  display: inline;
   margin-top: 0;
   padding-top: 10px;
   font-size: 25px;
   font-weight: 700;
 }
-ul {
+.detailList {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   padding: 0;
 }
 .genre,
@@ -46,24 +71,31 @@ ul {
   border: 1px solid white;
   border-radius: 10px;
   padding: 0 7px 1px 7px;
+  margin-bottom: 10px;
 }
-.detailsContaner {
-  width: 60%;
+
+.detailsContainer {
+  max-width: 450px;
+  margin: 0 auto;
+  width: 100%;
 }
-.detailsContaner p,
+.detailsContainer p,
 .castList,
 .sectionContainer {
   display: flex;
   border-bottom: 1px solid rgb(90, 80, 80);
   padding-bottom: 5px;
+
 }
 .castList {
   color: white;
   display: flex;
   flex-wrap: wrap;
+  list-style: none;
+  padding-left: 10px;
 }
 .castListItem {
-  margin-right: 20px;
+  margin-right: 15px;
   color: rgb(153, 55, 245);
 }
 .section {
@@ -73,6 +105,32 @@ ul {
   font-weight: 600;
 }
 .budget {
-  margin: 0;
+  margin: 0 0 10px 0;
   color: white;
+}
+@media screen and (min-width: 769px) {
+  .BackButton{
+    position: absolute;
+  }
+}
+@media screen and (min-width: 1201px) {
+  .container {
+    width: 60%;
+    max-width: none;
+  }
+  .visualContainer {
+    flex-direction: row;
+    height: 450px;
+  }
+  .iframe {
+height: 100%;
+  }
+  .poster {
+   width: auto;
+   margin-right: 5px;
+  }
+  .detailsContainer {
+    width: 100%;
+    max-width: none;
+  }
 }
