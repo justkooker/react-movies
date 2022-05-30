@@ -9,7 +9,9 @@ export default function FilmDeltails() {
   const { filmId } = useParams();
   const desktopView = useSelector(state => state.filmsState.desktopView);
   const mobileView = useSelector(state => state.filmsState.mobileView);
-  const mediumScreenView = useSelector(state => state.filmsState.mediumScreenView);
+  const mediumScreenView = useSelector(
+    state => state.filmsState.mediumScreenView
+  );
 
   const [treiler, setTreiler] = useState(false);
   const [filmDetails, setVideoDetails] = useState({
@@ -28,7 +30,11 @@ export default function FilmDeltails() {
   const posterURL = 'https://image.tmdb.org/t/p/w500/';
   const navigate = useNavigate();
   const goBack = function () {
-    navigate(state.from.pathname);
+    if (state) {
+      navigate(state.from.pathname);
+      return;
+    }
+    navigate('/');
   };
   useEffect(() => {
     desktopView ? setTreiler(true) : setTreiler(false);
@@ -54,14 +60,18 @@ export default function FilmDeltails() {
 
       {filmDetails.id !== '' && (
         <div className={styles.overlay}>
-           { (desktopView || mediumScreenView) && <div className={styles.BackButton}>
-                <ArrowButton func={goBack} ariaLabel={'go-back'}/>
-              </div>}
+          {(desktopView || mediumScreenView) && (
+            <div className={styles.BackButton}>
+              <ArrowButton func={goBack} ariaLabel={'go-back'} />
+            </div>
+          )}
           <div className={styles.container}>
             <div style={{ display: 'flex' }}>
-            { mobileView && <div className={styles.BackButton}>
-                <ArrowButton func={goBack} ariaLabel={'go-back'}/>
-              </div>}
+              {mobileView && (
+                <div className={styles.BackButton}>
+                  <ArrowButton func={goBack} ariaLabel={'go-back'} />
+                </div>
+              )}
               <p className={styles.title}>{filmDetails.title}</p>
             </div>
             <div className={styles.visualContainer}>
