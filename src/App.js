@@ -23,7 +23,7 @@ function App() {
   const dispatch = useDispatch();
   const onResize = () => {
     window.onresize = () => {
-      if (window.innerWidth < 601) {
+      if (window.innerWidth <= 600) {
         dispatch(setMediumScreenView(false));
         dispatch(setMobileView(true));
       }
@@ -35,11 +35,28 @@ function App() {
         dispatch(setMediumScreenView(false));
         dispatch(setDesktopView(true));
       }
-      if (window.innerWidth < 1201) {
+      if (window.innerWidth <= 1200) {
         dispatch(setDesktopView(false));
       }
     };
   };
+  const countScreenWidth = () => {
+    if (window.innerWidth <= 600) {
+      dispatch(setMobileView(true));
+      return
+    }
+    if (window.innerWidth > 600 && window.innerWidth <=1200 ) {
+      dispatch(setMediumScreenView(true));
+      return
+    }
+    if (window.innerWidth > 1200) {
+      dispatch(setDesktopView(true));
+      return
+    }
+  };
+  useEffect(()=> {
+    countScreenWidth()
+  },[])
   useEffect(() => {
     onResize();
   }, []);
