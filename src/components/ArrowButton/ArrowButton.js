@@ -1,6 +1,6 @@
 import styles from './ArrowButton.module.css';
-export default function ArrowButton({func, from }) {
+export default function ArrowButton({func, ariaLabel }) {
   return (
-    <button onClick={func} type="button" className={styles.button}></button>
+    <button onClick={func} type="button" aria-label={ariaLabel} className={styles.button}></button>
   );
 }

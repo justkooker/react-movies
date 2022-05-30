@@ -35,7 +35,7 @@ export default function SearchForm() {
         type="text"
         value={query}
       />
-      <button type="submit"></button>
+      <button aria-label='search-movie-submit-button' type="submit"></button>
     </form>
   );
 }

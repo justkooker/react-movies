@@ -6,7 +6,7 @@
   width: 95%;
   max-width: 480px;
   height: 100%;
-
+  min-height: 100vh;
   margin: 0 auto;
 }
 .showTreilerBtn {
@@ -33,8 +33,7 @@
 }
 .BackButton {
   position: static;
-  top: 70px;
-  left: 20px;
+
   width: 50px;
   height: 50px;
   transform: rotate(180deg);
@@ -85,7 +84,6 @@
   display: flex;
   border-bottom: 1px solid rgb(90, 80, 80);
   padding-bottom: 5px;
-
 }
 .castList {
   color: white;
@@ -108,10 +106,21 @@
   margin: 0 0 10px 0;
   color: white;
 }
-@media screen and (min-width: 769px) {
-  .BackButton{
-    position: absolute;
+@media screen and (min-width: 600px) {
+  .BackButton {
+    position: sticky;
+    top: 60px;
+    left: 20px;
   }
+ 
+}
+@media screen and (min-width: 769px) {
+  .BackButton {
+    position: sticky;
+    top: 80px;
+    left: 20px;
+  }
+ 
 }
 @media screen and (min-width: 1201px) {
   .container {
@@ -123,11 +132,11 @@
     height: 450px;
   }
   .iframe {
-height: 100%;
+    height: 100%;
   }
   .poster {
-   width: auto;
-   margin-right: 5px;
+    width: auto;
+    margin-right: 5px;
   }
   .detailsContainer {
     width: 100%;

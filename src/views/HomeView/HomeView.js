@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchTrendFilms } from 'redux/features/filmsSlice';
+import { fetchTrendFilms,fetchUpcomingMovies } from 'redux/features/filmsSlice';
 import TrendFilmList from '../../components/TrendFilmList';
 
-function HomeView() {
+export default function HomeView() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchTrendFilms());
+    dispatch(fetchUpcomingMovies());
+
   }, []);
   return <TrendFilmList />;
 }
 
-export default HomeView;

@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 export default function FilmDeltails() {
   const { filmId } = useParams();
   const desktopView = useSelector(state => state.filmsState.desktopView);
+  const mobileView = useSelector(state => state.filmsState.mobileView);
+  const mediumScreenView = useSelector(state => state.filmsState.mediumScreenView);
+
   const [treiler, setTreiler] = useState(false);
   const [filmDetails, setVideoDetails] = useState({
     yotubeId: '',
@@ -51,11 +54,14 @@ export default function FilmDeltails() {
 
       {filmDetails.id !== '' && (
         <div className={styles.overlay}>
+           { (desktopView || mediumScreenView) && <div className={styles.BackButton}>
+                <ArrowButton func={goBack} ariaLabel={'go-back'}/>
+              </div>}
           <div className={styles.container}>
-            <div style={{ display: "flex" }}>
-              <div className={styles.BackButton}>
-                <ArrowButton func={goBack} />
-              </div>
+            <div style={{ display: 'flex' }}>
+            { mobileView && <div className={styles.BackButton}>
+                <ArrowButton func={goBack} ariaLabel={'go-back'}/>
+              </div>}
               <p className={styles.title}>{filmDetails.title}</p>
             </div>
             <div className={styles.visualContainer}>
@@ -69,6 +75,7 @@ export default function FilmDeltails() {
                   onClick={showTreilerToggle}
                   className={styles.showTreilerBtn}
                   type="button"
+                  aria-label={treiler ? 'close-treiler' : 'open-treiler'}
                 >
                   {treiler ? 'Close treiler' : 'Show treiler'}
                 </button>

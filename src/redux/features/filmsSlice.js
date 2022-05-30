@@ -80,6 +80,7 @@ const filmsSlice = createSlice({
     fetchingScroll: false,
     mobileView: null,
     desktopView: null,
+    mediumScreenView: null,
   },
   reducers: {
     fetchingScrollOn(state) {
@@ -119,6 +120,9 @@ const filmsSlice = createSlice({
     setUpcomingMoviesStatus(state, { payload }) {
       state.upcomingFilmsStatus = payload;
     },
+    setMediumScreenView(state, { payload }) {
+      state.mediumScreenView = payload;
+    },
   },
 });
 export const {
@@ -132,5 +136,6 @@ export const {
   setDesktopView,
   addUpcomigFilmsToState,
   setUpcomingMoviesStatus,
+  setMediumScreenView
 } = filmsSlice.actions;
 export default filmsSlice.reducer;

@@ -1,9 +1,14 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setMobileView, setDesktopView } from 'redux/features/filmsSlice';
+import {
+  setMobileView,
+  setDesktopView,
+  setMediumScreenView,
+} from 'redux/features/filmsSlice';
 import routes from './routes/routes';
 import AppBar from 'components/AppBar';
+import Loader from 'components/Loader';
 const HomeView = lazy(() =>
   import('./views/HomeView/' /* webpackChunkName: "home-view" */)
 );
@@ -18,13 +23,16 @@ function App() {
   const dispatch = useDispatch();
   const onResize = () => {
     window.onresize = () => {
-      if (window.innerWidth < 481) {
+      if (window.innerWidth < 601) {
+        dispatch(setMediumScreenView(false));
         dispatch(setMobileView(true));
       }
-      if (window.innerWidth > 480) {
+      if (window.innerWidth > 600) {
         dispatch(setMobileView(false));
+        dispatch(setMediumScreenView(true));
       }
       if (window.innerWidth > 1200) {
+        dispatch(setMediumScreenView(false));
         dispatch(setDesktopView(true));
       }
       if (window.innerWidth < 1201) {
@@ -39,7 +47,7 @@ function App() {
     <>
       <AppBar />
       <div className="container">
-        <Suspense fallback={<p>loading...</p>}>
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route path={routes.home} element={<HomeView />} />
             <Route path={routes.film} element={<VideoView />} />

@@ -89,7 +89,7 @@ function FilmList({ filmList }) {
       </ul>
       {activeBtnToTop && (
         <div className={styles.toTopBtn}>
-          <ArrowButton func={scrollToTop} />
+          <ArrowButton func={scrollToTop} ariaLabel={'go-to-top'}/>
         </div>
       )}
     </>
